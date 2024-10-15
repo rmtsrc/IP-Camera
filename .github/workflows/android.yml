@@ -24,7 +24,8 @@ jobs:
       run: |
         cd Android
         chmod +x gradlew
-        ./gradlew build
+        ./gradlew :common:assemble
+        ./gradlew :app:assembleDebug
     
     - name: Archive Debug Build
       uses: actions/upload-artifact@v4
