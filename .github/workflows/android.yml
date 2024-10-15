@@ -35,6 +35,12 @@ jobs:
     #- name: Grant execute permission for gradlew
     #  run: find /usr/local/ -name gradlew -exec chmod +x {} \;
     - name: Change to Android app folder and build
-      run: 
-        cd Android |
-        ./gradlew build
+      run: |
+        cd Android
+        ./gradlew :common:assemble
+        ./gradlew :app:assembleDebug
+
+    - name: Archive Debug Build
+      uses: actions/upload-artifact@v4
+      with:
+        path: ./**/*.apk
