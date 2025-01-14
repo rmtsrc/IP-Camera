@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.7.21'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
 
 group = 'org.example'
@@ -11,6 +12,7 @@ repositories {
 
 dependencies {
     implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
@@ -24,4 +26,21 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = '1.8'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'MainKt' // Kotlin main class is usually suffixed with 'Kt'
+        )
+    }
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    mergeServiceFiles()
+}
+
+tasks.build {
+    dependsOn shadowJar
 }
